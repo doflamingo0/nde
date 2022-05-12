@@ -203,7 +203,8 @@ public class Individual {
 		
 		ArrayList<Integer> listNodes = new ArrayList<>(); // list nodes in the virtual graph: bao gom tat ca cac node bien trong mien di qua
 		for(int d: path) {
-			listNodes.addAll(task.borderNode.get(d));
+//			listNodes.addAll(task.borderNode.get(d));
+			listNodes.addAll(task.listDomain.get(d));
 		}
 		
 		int cost = dijkstra(task, listNodes);

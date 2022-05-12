@@ -127,8 +127,9 @@ public class IDPCNDU {
 			s = inp.nextInt();
 			t = inp.nextInt();
 
-			indegreeNode = new int[numberOfNodes+1];
-			outdegreeNode = new int[numberOfNodes+1];
+			// PGA ko su dung 2 dong nay
+//			indegreeNode = new int[numberOfNodes+1];
+//			outdegreeNode = new int[numberOfNodes+1];
 			indegreeDomain = new int[numberOfDomains+1];
 			outdegreeDomain = new int[numberOfDomains+1];
 			
@@ -167,13 +168,14 @@ public class IDPCNDU {
 			endDomain.add(t);
 			listDomain.add(endDomain);
 			domain[inp.nextInt()] = numberOfDomains;
-
+			
+			// PGA ko su dung borderNode
+//			borderNode = new ArrayList<ArrayList<Integer> >(numberOfDomains+1);
 			adjDomain = new ArrayList<ArrayList<Integer> >(numberOfDomains+1);
-			borderNode = new ArrayList<ArrayList<Integer> >(numberOfDomains+1);
 			parentDomain = new ArrayList<ArrayList<Integer> >(numberOfDomains+1);
 			for(int i = 0; i <= numberOfDomains; i++) {
+//				borderNode.add(new ArrayList<>());
 				adjDomain.add(new ArrayList<>());
-				borderNode.add(new ArrayList<>());
 				parentDomain.add(new ArrayList<>());
 			}
 			
@@ -194,8 +196,8 @@ public class IDPCNDU {
 				if(!parentNode.get(j).contains(i)) parentNode.get(j).add(i);
 				
 				distance[i][j] = Math.min(distance[i][j], w);
-				outdegreeNode[i]++;
-				indegreeNode[j]++;
+//				outdegreeNode[i]++;
+//				indegreeNode[j]++;
 				
 				// update adjacent list of domain and border node
 				if(domain[i] != domain[j]) {
@@ -205,17 +207,18 @@ public class IDPCNDU {
 					
 					if(!adjDomain.get(domain[i]).contains(domain[j]))
 						adjDomain.get(domain[i]).add(domain[j]);
-					if(!borderNode.get(domain[i]).contains(i))
-						borderNode.get(domain[i]).add(i);
-					if(!borderNode.get(domain[j]).contains(j))
-						borderNode.get(domain[j]).add(j);
+//					if(!borderNode.get(domain[i]).contains(i))
+//						borderNode.get(domain[i]).add(i);
+//					if(!borderNode.get(domain[j]).contains(j))
+//						borderNode.get(domain[j]).add(j);
 					if(!parentDomain.get(domain[j]).contains(domain[i]))
 						parentDomain.get(domain[j]).add(domain[i]);
 				}
 			}
-			
-			preFilterProcessing();
-			floydWarshall();
+
+			// su dung pre-processing cua PGA nen ko su dung 2 ham nay
+//			preFilterProcessing();
+//			floydWarshall();
 			
 
 //			int cnt = 0;

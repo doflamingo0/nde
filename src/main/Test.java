@@ -72,9 +72,9 @@ public class Test {
 	public static void main(String[] args) throws IOException {
 		System.out.println("Running...");
 		Configs.rd = new Random();
-		String dataPath = "D:\\Documents\\Multitask Evolutionary Computing\\Data IDPCDU Nodes";
-		String ouputPath = "D:\\Documents\\Multitask Evolutionary Computing\\Node_Depth_Results";
-		String result = "D:\\Documents\\Multitask Evolutionary Computing\\Data IDPCDU Nodes\\ketqua.txt";
+		String dataPath = "D:\\Documents\\MSO Lab\\IDPC-NDU\\data";
+		String ouputPath = "D:\\Documents\\MSO Lab\\IDPC-NDU\\result_preprocess_pga";
+		String result = "D:\\Documents\\MSO Lab\\IDPC-NDU\\ketqua_test.txt";
 		FileWriter fw = new FileWriter(result);
 		fw.write("Instances\t\t\t\t\tBF\t\tAVG\t\t\tSTD\n");
 		File out = new File(ouputPath);
