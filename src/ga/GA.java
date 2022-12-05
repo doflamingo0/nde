@@ -74,6 +74,46 @@ public class GA {
 		return population.getBestIndividual();
 	}
 	
+	// For get data of domain, node, edge when decode
+	public Individual run2(int seed) throws IOException {
+
+		Population population = new Population(task);
+		population.initPopulation(); // init and update fitness
+		population.updateBestIndividual();
+//		System.out.println("Init Population, Start Distance: " + (-population.getBestIndividual().getFitness()));
+		int generation = 0;
+		String outFileNameOpt = fileName + "_seed(" + String.valueOf(seed) + ").opt";
+//		String outFileNameOpt = fileName;
+		@SuppressWarnings("resource")
+		FileWriter fwGen = new FileWriter(outputPath+ "\\"+outFileNameOpt);
+		fwGen.write("Gen\tTotal_domain\tDomain\tTotal_node\tNode\tTotal_edge\tEdge\n");
+
+		while(generation < Configs.MAX_GENERATIONS) {
+			
+			Individual b = population.getBestIndividual();
+			
+			fwGen.write(String.valueOf(generation) + "\t" + String.valueOf(b.total_domain) + "\t" + String.valueOf(b.domain) + "\t" + String.valueOf(b.total_node) + "\t" + String.valueOf(b.node) + "\t" + String.valueOf(b.total_edge) + "\t" + String.valueOf(b.edge) + "\n");
+			fwGen.flush();
+			// tao tap con
+			ArrayList<Individual> offspring = reproduction(population.getPopulation());
+			
+			// gop quan the cu vs quan the moi
+			ArrayList<Individual> imiPop = new ArrayList<>();
+			
+			imiPop.addAll(offspring);
+			imiPop.addAll(population.getPopulation());
+			
+			// luau chon ca the cua the he sau
+			population.setPopulation(imiPop);
+			population.survivalSelection();
+			generation++;
+			
+//			System.out.println("G " + generation + " best: " + (-population.getBestIndividual().getFitness()));
+		}
+
+		return population.getBestIndividual();
+	}
+	
 	// tournament with k = 2
 	public Individual selectParent(ArrayList<Individual> parents) {
 		int pos1 = Configs.rd.nextInt(parents.size());

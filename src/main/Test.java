@@ -3,6 +3,7 @@ package main;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -32,6 +33,8 @@ public class Test {
 	}
 	
 	public static void solver(FileWriter fw, String dataPath, String outputPath, String name) throws IOException {
+		
+		long t1 = System.currentTimeMillis();
 		IDPCNDU task = new IDPCNDU();
 		task.readData(dataPath);
 		GA ga = new GA(task, outputPath, name);
@@ -47,9 +50,11 @@ public class Test {
 			rs[seed] = -best.getFitness();
 //			System.out.println("---------------------------------------");
 		}
+		long t2 = System.currentTimeMillis();
+		long time = (t2-t1)/1000/60/Configs.REPEAT; // minutes
 		double AVG = mean(rs);
 		double STD = std(rs, AVG);
-		String p = String.format("\t\t%d\t\t%.2f\t\t%.2f", BF, AVG, STD);
+		String p = String.format("\t%d\t%.2f\t%.2f\t%.2f", BF, AVG, STD, time);
 		fw.write(name + p +"\n");
 		
 	}
@@ -70,20 +75,60 @@ public class Test {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		System.out.println("Running...");
+//		System.out.println("Running...");
+//		Configs.rd = new Random();
+//		String dataPath = "D:\\Documents\\MSO Lab\\IDPC-NDU\\data";
+//		String ouputPath = "D:\\Documents\\MSO Lab\\IDPC-NDU\\result_preprocess_pga";
+//		String result = "D:\\Documents\\MSO Lab\\IDPC-NDU\\ketqua_test.txt";
+//		FileWriter fw = new FileWriter(result);
+//		fw.write("Instances\tBF\t\tAVG\tSTD\tTime\n");
+//		File out = new File(ouputPath);
+//		File[] children = out.listFiles();
+//		for(File ff: children) {
+//			String filePath = ff.getAbsolutePath();
+//			buildModel(fw,filePath, dataPath);
+//		}
+//		fw.flush();
+//		System.out.println("DONE!");
+		
+		
+		System.out.println("Start...");
 		Configs.rd = new Random();
-		String dataPath = "D:\\Documents\\MSO Lab\\IDPC-NDU\\data";
-		String ouputPath = "D:\\Documents\\MSO Lab\\IDPC-NDU\\result_preprocess_pga";
-		String result = "D:\\Documents\\MSO Lab\\IDPC-NDU\\ketqua_test.txt";
-		FileWriter fw = new FileWriter(result);
-		fw.write("Instances\t\t\t\t\tBF\t\tAVG\t\t\tSTD\n");
-		File out = new File(ouputPath);
-		File[] children = out.listFiles();
-		for(File ff: children) {
-			String filePath = ff.getAbsolutePath();
-			buildModel(fw,filePath, dataPath);
+		
+		ArrayList<String> file_url = new ArrayList<>();
+
+		file_url.add("data\\idpc_ndu_302_12_4930.txt");
+		file_url.add("data\\idpc_ndu_1002_12_82252.txt");
+		file_url.add("data\\idpc_ndu_1506_9_130556.txt");
+		file_url.add("data\\idpc_ndu_2494_12_276620.txt");
+		file_url.add("data\\idpc_ndu_2715_22_592246.txt");
+		
+		for(int i = 0; i < file_url.size(); i++) {
+			System.out.println(file_url.get(i));
+			solve(file_url.get(i), "output\\");
 		}
-		fw.flush();
-		System.out.println("DONE!");
+		System.out.println("DONE...");
+	}
+	
+	
+	public static void solve(String url, String output) throws IOException {
+		
+		IDPCNDU task = new IDPCNDU();
+		task.readData(url);
+		GA ga = new GA(task, output, url);
+	
+		int BF = Integer.MAX_VALUE;
+
+		int[] rs = new int[Configs.REPEAT];
+		
+		for(int seed = 0; seed < Configs.REPEAT; seed++) {
+			Configs.rd.setSeed(seed);
+			System.out.println(seed);
+			Individual best = ga.run2(seed);
+//			System.out.println("Seed " + seed + " Best distance: " + (-best.getFitness()));
+//			BF = Math.min(-best.getFitness(), BF);
+//			rs[seed] = -best.getFitness();
+//			System.out.println("---------------------------------------");
+		}
 	}
 }
