@@ -1,0 +1,11 @@
+file set2_L.txt
+idpc_ndu_2002_17_128021
+idpc_ndu_2102_19_141155
+idpc_ndu_2202_22_153764
+idpc_ndu_2302_27_169859
+idpc_ndu_2402_29_186438
+idpc_ndu_2502_32_201852
+idpc_ndu_2602_19_185818
+idpc_ndu_2702_22_199214
+idpc_ndu_2802_30_215589
+idpc_ndu_2902_32_229375

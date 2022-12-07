@@ -24,6 +24,7 @@ public class Population {
 			Individual i = new Individual();
 			i.randomInit(task.adjDomain);
 			i.updateFitness(task);
+
 			if(i.getFitness() > -Configs.MAX_VALUE) population.add(i);
 		}
 	}

@@ -3,7 +3,6 @@ package main;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -36,6 +35,7 @@ public class Test {
 		
 		long t1 = System.currentTimeMillis();
 		IDPCNDU task = new IDPCNDU();
+		System.out.println(dataPath);
 		task.readData(dataPath);
 		GA ga = new GA(task, outputPath, name);
 		int BF = Integer.MAX_VALUE;
@@ -45,13 +45,13 @@ public class Test {
 		for(int seed = 0; seed < Configs.REPEAT; seed++) {
 			Configs.rd.setSeed(seed);
 			Individual best = ga.run(seed);
-//			System.out.println("Seed " + seed + " Best distance: " + (-best.getFitness()));
+			System.out.println("Seed " + seed + " Best distance: " + (-best.getFitness()));
 			BF = Math.min(-best.getFitness(), BF);
 			rs[seed] = -best.getFitness();
-//			System.out.println("---------------------------------------");
+			System.out.println("---------------------------------------");
 		}
 		long t2 = System.currentTimeMillis();
-		long time = (t2-t1)/1000/60/Configs.REPEAT; // minutes
+		double time = (t2-t1)/1000/60/Configs.REPEAT; // minutes
 		double AVG = mean(rs);
 		double STD = std(rs, AVG);
 		String p = String.format("\t%d\t%.2f\t%.2f\t%.2f", BF, AVG, STD, time);
@@ -75,39 +75,51 @@ public class Test {
 	}
 	
 	public static void main(String[] args) throws IOException {
-//		System.out.println("Running...");
-//		Configs.rd = new Random();
-//		String dataPath = "D:\\Documents\\MSO Lab\\IDPC-NDU\\data";
-//		String ouputPath = "D:\\Documents\\MSO Lab\\IDPC-NDU\\result_preprocess_pga";
-//		String result = "D:\\Documents\\MSO Lab\\IDPC-NDU\\ketqua_test.txt";
-//		FileWriter fw = new FileWriter(result);
-//		fw.write("Instances\tBF\t\tAVG\tSTD\tTime\n");
-//		File out = new File(ouputPath);
-//		File[] children = out.listFiles();
-//		for(File ff: children) {
-//			String filePath = ff.getAbsolutePath();
-//			buildModel(fw,filePath, dataPath);
-//		}
-//		fw.flush();
-//		System.out.println("DONE!");
-		
-		
-		System.out.println("Start...");
 		Configs.rd = new Random();
+		System.out.println("Running...");
 		
-		ArrayList<String> file_url = new ArrayList<>();
-
-		file_url.add("data\\idpc_ndu_302_12_4930.txt");
-		file_url.add("data\\idpc_ndu_1002_12_82252.txt");
-		file_url.add("data\\idpc_ndu_1506_9_130556.txt");
-		file_url.add("data\\idpc_ndu_2494_12_276620.txt");
-		file_url.add("data\\idpc_ndu_2715_22_592246.txt");
+		// Folder chua cac file data
+		String dataPath = "data";
 		
-		for(int i = 0; i < file_url.size(); i++) {
-			System.out.println(file_url.get(i));
-			solve(file_url.get(i), "output\\");
+		// Folder chua output .gen, .opt
+		String ouputPath = "output";
+		
+		// File tong hop ket qua
+		String result = "output\\all_result.txt";
+		
+		FileWriter fw = new FileWriter(result);
+		fw.write("Instances\tBF\t\tAVG\tSTD\tTime\n");
+		
+		File out = new File(ouputPath);
+		File[] children = out.listFiles();
+		for(File ff: children) {
+			String filePath = ff.getAbsolutePath();
+			if (filePath.contains(".txt")) {
+				continue;
+			}
+			
+			buildModel(fw,filePath, dataPath);
 		}
-		System.out.println("DONE...");
+		fw.flush();
+		System.out.println("DONE!");
+		
+		
+//		System.out.println("Start...");
+//		Configs.rd = new Random();
+//		
+//		ArrayList<String> file_url = new ArrayList<>();
+//
+//		file_url.add("data\\idpc_ndu_302_12_4930.txt");
+//		file_url.add("data\\idpc_ndu_1002_12_82252.txt");
+//		file_url.add("data\\idpc_ndu_1506_9_130556.txt");
+//		file_url.add("data\\idpc_ndu_2494_12_276620.txt");
+//		file_url.add("data\\idpc_ndu_2715_22_592246.txt");
+//		
+//		for(int i = 0; i < file_url.size(); i++) {
+//			System.out.println(file_url.get(i));
+//			solve(file_url.get(i), "output\\");
+//		}
+//		System.out.println("DONE...");
 	}
 	
 	

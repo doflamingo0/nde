@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-import mfea.Configs;
 import problem.IDPCNDU;
 
 public class Individual {
@@ -177,6 +176,10 @@ public class Individual {
 	private int[][] buildGraph(IDPCNDU task, ArrayList<Integer> path, ArrayList<Integer> listNodes) {
 		
 		int[][] distance = new int[task.getNumberOfNodes()+1][task.getNumberOfNodes()+1];
+		for(int i = 1; i <= task.getNumberOfNodes(); i++) {
+			Arrays.fill(distance[i], Configs.MAX_VALUE);
+			distance[i][i] = 0;
+		}
 		
 		int edge = 0;
 		int node = 0;
@@ -225,25 +228,6 @@ public class Individual {
 		
 		dist[task.getS()] = 0;
 
-//		// VD voi thu tu mien 1 -> 2 -> 3 -> 4, neu co canh noi truc tiep tu mien 1 den mien 4 -> van thoa man
-//		int[][] distance = task.distance;
-//		
-//		while(true) {
-//			int u = minDistance(dist, visited, path);
-//			if(u == -1) return Configs.MAX_VALUE;
-//			visited[u] = true;
-//			if(u == task.getT()) break;
-//			
-//			for(int v: path) {
-//				if(!visited[v] && u != v && distance[u][v] != Configs.MAX_VALUE && dist[v] > dist[u] + distance[u][v]) { // co them dist[u] != Configs.MAX_VALUE k?
-//					dist[v] = dist[u] + distance[u][v];
-//				}
-//			}
-//			
-//		}
-
-		// VD voi thu tu mien 1 -> 2 -> 3 -> 4, neu co canh noi truc tiep tu mien 1 den mien 4 -> Khong thoa man
-		// chi chap nhan canh theo thu tu mien do
 		while(true) {
 			int u = minDistance(dist, visited, path);
 			if(u == -1) return Configs.MAX_VALUE;
@@ -263,16 +247,10 @@ public class Individual {
 
 	public void updateFitness(IDPCNDU task) {
 		ArrayList<Integer> path = decode(task);
-//		int N = task.getNumberOfNodes(); 
-//		int[][] virtualDistance = new int[N+1][N+1];
-//		for(int i = 1; i <= N; i++) {
-//			Arrays.fill(virtualDistance[i], Configs.MAX_VALUE);
-//		}
 		
 		ArrayList<Integer> listNodes = new ArrayList<>(); // list nodes in the virtual graph: bao gom tat ca cac node bien trong mien di qua
 		for(int d: path) {
 			listNodes.addAll(task.borderNode.get(d)); // NDE
-//			listNodes.addAll(task.listDomain.get(d));
 		}
 
 		int[][] distance = buildGraph(task, path, listNodes);

@@ -10,6 +10,7 @@ import java.util.Scanner;
 import ga.Configs;
 
 public class IDPCNDU {
+
 	private int numberOfNodes;
 	private int numberOfDomains;
 	public int numberOfEdges = 0;
@@ -128,7 +129,6 @@ public class IDPCNDU {
 			s = inp.nextInt();
 			t = inp.nextInt();
 
-			// PGA ko su dung 2 dong nay
 			indegreeNode = new int[numberOfNodes+1];
 			outdegreeNode = new int[numberOfNodes+1];
 			indegreeDomain = new int[numberOfDomains+1];
@@ -170,7 +170,6 @@ public class IDPCNDU {
 			listDomain.add(endDomain);
 			domain[inp.nextInt()] = numberOfDomains;
 			
-			// PGA ko su dung borderNode
 			borderNode = new ArrayList<ArrayList<Integer> >(numberOfDomains+1);
 			adjDomain = new ArrayList<ArrayList<Integer> >(numberOfDomains+1);
 			parentDomain = new ArrayList<ArrayList<Integer> >(numberOfDomains+1);
@@ -218,7 +217,6 @@ public class IDPCNDU {
 				}
 			}
 
-			// su dung pre-processing cua PGA nen ko su dung 2 ham nay
 			preFilterProcessing();
 			floydWarshall();
 			

@@ -1,0 +1,21 @@
+file set2_S.txt
+idpc_ndu_1002_32_60942
+idpc_ndu_102_10_834
+idpc_ndu_1102_17_56280
+idpc_ndu_1202_18_68002
+idpc_ndu_1302_22_78953
+idpc_ndu_1402_24_92365
+idpc_ndu_1502_27_104878
+idpc_ndu_152_14_1869
+idpc_ndu_1602_14_96765
+idpc_ndu_1702_18_110993
+idpc_ndu_1802_21_123666
+idpc_ndu_1902_27_137407
+idpc_ndu_202_22_2341
+idpc_ndu_252_11_3513
+idpc_ndu_302_12_4930
+idpc_ndu_352_17_6667
+idpc_ndu_402_22_8220
+idpc_ndu_452_32_10406
+idpc_ndu_502_12_10949
+idpc_ndu_52_6_204

@@ -40,16 +40,20 @@ public class GA {
 	}
 	
 	public Individual run(int seed) throws IOException {
+		
 		long t1 = System.currentTimeMillis();
 		Population population = new Population(task);
 		population.initPopulation(); // init and update fitness
 		population.updateBestIndividual();
+		
 //		System.out.println("Init Population, Start Distance: " + (-population.getBestIndividual().getFitness()));
 		int generation = 0;
 		String outFileNameGen = fileName + "_seed(" + String.valueOf(seed) + ").gen";
 		FileWriter fwGen = new FileWriter(outputPath+ "\\"+outFileNameGen);
 		fwGen.write("Generations " + fileName +"\n");
 
+		System.out.println(outFileNameGen);
+		
 		while(generation < Configs.MAX_GENERATIONS) {
 			fwGen.write(String.valueOf(generation) + " " + String.valueOf(-population.getBestIndividual().getFitness())+"\n");
 			fwGen.flush();
